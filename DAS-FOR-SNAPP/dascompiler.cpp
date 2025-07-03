@@ -14,7 +14,10 @@ void replace_all(std::string& str, const std::string& from, const std::string& t
 }
 
 int main() {
-    std::ifstream inFile("compilefile.snapp");
+    std::string filename;
+    std::cout << "enter filename: ";
+    std::cin >> filename;
+    std::ifstream inFile(filename);
     if (!inFile) {
         std::cerr << "Failed to open file.\n";
         return 1;
