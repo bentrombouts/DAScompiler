@@ -38,8 +38,7 @@ int main() {
     // First replace keywords
     const std::vector<std::pair<std::string, std::string>> replacements = {
         {"var ", ""}, {"v_", "V"}, {"system.out", "OUT"}, {" = ", "."},
-        {"nil", ""}, {"+", "ADD"}, {"-", "SUB"}, {"/", "DIV"},
-        {"*", "MUL"}, {"function.create", "FUNC"}, {"function.call", "CALL"},
+        {"nil", ""}, {"function.create", "FUNC"}, {"function.call", "CALL"},
         {"  ", ""}, {" do", ""}, {"if", "IF"},
     };
     for (const auto& [from, to] : replacements) {
