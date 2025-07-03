@@ -3,6 +3,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <chrono>  // timing
+#include <iomanip>  // for std::setprecision
 
 void replace_all(std::string& str, const std::string& from, const std::string& to) {
     if (from.empty()) return;
@@ -15,8 +17,11 @@ void replace_all(std::string& str, const std::string& from, const std::string& t
 
 int main() {
     std::string filename;
-    std::cout << "enter filename: ";
+    std::cout << "Enter filename: ";
     std::cin >> filename;
+
+    auto start = std::chrono::high_resolution_clock::now();
+
     std::ifstream inFile(filename);
     if (!inFile) {
         std::cerr << "Failed to open file.\n";
@@ -29,22 +34,11 @@ int main() {
 
     std::string content = buffer.str();
 
-    // List of replacements
     const std::vector<std::pair<std::string, std::string>> replacements = {
-        {"var ", ""},
-        {"v_", "V"},
-        {"system.out", "OUT"},
-        {" = ", "."},
-        {"nil", ""},
-        {"+", "ADD"},
-        {"-", "SUB"},
-        {"/", "DIV"},
-        {"*", "MUL"},
-        {"function.create", "FUNC"},
-        {"function.call", "CALL"},
-        {"  ", ""},
-        {" do", ""},
-        {"if", "IF"},
+        {"var ", ""}, {"v_", "V"}, {"system.out", "OUT"}, {" = ", "."},
+        {"nil", ""}, {"+", "ADD"}, {"-", "SUB"}, {"/", "DIV"},
+        {"*", "MUL"}, {"function.create", "FUNC"}, {"function.call", "CALL"},
+        {"  ", ""}, {" do", ""}, {"if", "IF"},
     };
 
     for (const auto& [from, to] : replacements) {
@@ -60,6 +54,10 @@ int main() {
     outFile << content;
     outFile.close();
 
-    std::cout << "File updated successfully.\n";
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> duration = end - start;
+
+    std::cout << std::fixed << std::setprecision(3) << "File updated successfully in " << duration.count() / 1000.0 << " seconds.\n";
+
     return 0;
 }
